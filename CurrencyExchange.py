@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget,QLabel,QPushButton,QHBoxLayout,QVBoxLayout,QComboBox
+from PyQt5.QtWidgets import QApplication, QWidget,QLabel,QPushButton,QHBoxLayout,QVBoxLayout,QComboBox,QLineEdit
 import Helper
 import requests
 from PyQt5.QtCore import Qt
@@ -9,6 +9,7 @@ class MainWindow(QWidget):
         self.label = QLabel("Currency Converter",self)
         self.label2 = QLabel("Currency 1: ",self)
         self.label3 = QLabel("Currency 2: ",self)
+        self.line1 = QLineEdit(self)
         self.combo1 = QComboBox(self)
         self.combo1.addItems(Helper.country_names)
         self.combo2 = QComboBox(self)
@@ -32,18 +33,22 @@ class MainWindow(QWidget):
         vbox.addWidget(self.label)
         vbox.addLayout(hbox1)
         vbox.addLayout(hbox2)
+        vbox.addWidget(self.line1)
         vbox.addWidget(self.button,alignment=Qt.AlignCenter)
         vbox.addWidget(self.label4)
         self.setLayout(vbox)
+        self.line1.setPlaceholderText("Enter Amount")
+        self.combo1.setPlaceholderText("First Currency")
         self.button.setFixedWidth(80)
+        self.line1.setFixedWidth(100)
         self.label.setAlignment(Qt.AlignCenter)
-        #self.button.setAlignment(Qt.AlignCenter)
+        self.line1.setAlignment(Qt.AlignLeft)
         self.label4.setAlignment(Qt.AlignCenter)
         self.setStyleSheet("""
                             QLabel#label{font-size:60px;
                                         border:2px solid hsl(222,100%,69%);
                                         background-color:hsl(222,100%,58.3%);             
-                                        padding:10px;}
+                                        padding:10px;}                          
                             QLabel#label2{font-size:30px;}
                             QLabel#label3{font-size:30px;}
                             QComboBox{font-size:15px;}
@@ -69,7 +74,9 @@ class MainWindow(QWidget):
             self.label4.setText(f"Error: {e}")
 
     def display(self,data):
-        self.label4.setText(f"1 {Helper.country_currency_data[self.combo1.currentText()]} is worth {data['conversion_rates'][Helper.country_currency_data[self.combo2.currentText()]]:.2f} {Helper.country_currency_data[self.combo2.currentText()]}")
+        if self.line1.text()=="":
+            self.line1.setText("1")
+        self.label4.setText(f"{self.line1.text()} {Helper.country_currency_data[self.combo1.currentText()]} is worth {int(self.line1.text())*data['conversion_rates'][Helper.country_currency_data[self.combo2.currentText()]]} {Helper.country_currency_data[self.combo2.currentText()]}")
 if __name__=="__main__":
     app = QApplication(sys.argv)
     window = MainWindow()
