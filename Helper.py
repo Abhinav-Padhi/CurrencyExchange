@@ -161,8 +161,8 @@ country_currency_data = {
     "Zambia": "ZMW",
     "Zimbabwe": "ZWL"
 }
-api_key = "c67aaf16e1b3fc94eda8f517"
-url = "https://v6.exchangerate-api.com/v6/c67aaf16e1b3fc94eda8f517/latest/{country}"
+api_key = "c67aaf16e1b3fc94eda*****"
+url = "https://v6.exchangerate-api.com/v6/c67aaf16e1b3fc94eda*****/latest/{country}"
 country_names = [
     "United Arab Emirates",
     "Afghanistan",
