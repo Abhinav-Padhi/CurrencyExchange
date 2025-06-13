@@ -62,8 +62,8 @@ class MainWindow(QWidget):
         
         self.button.clicked.connect(self.conversion)
     def conversion(self):
-        
-        url = f"https://v6.exchangerate-api.com/v6/c67aaf16e1b3fc94eda8f517/latest/{Helper.country_currency_data[self.combo1.currentText()]}"
+        api_key = Helper.api_key
+        url = f"https://v6.exchangerate-api.com/v6/{api_key}/latest/{Helper.country_currency_data[self.combo1.currentText()]}"
         try:
             response = requests.get(url)
             response.raise_for_status()
